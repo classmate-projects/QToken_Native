@@ -1,0 +1,5 @@
+QToken_Native/bin/
+QToken_Native/obj/
+*.csproj.user
+*.nuget.*
+QToken_Native/.vs/
