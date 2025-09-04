@@ -1,5 +1,4 @@
-QToken_Native/.vs
-QToken_Native/obj
-QToken_Native/bin
 QToken_Native/QToken_Native.csproj.user
-/QToken_Native/QToken_Native.csproj.user
+QToken_Native/bin
+QToken_Native/obj
+QToken_Native/.vs
