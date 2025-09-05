@@ -68,6 +68,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="ContentView\" />
+	  <Folder Include="Views\" />
 	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 
