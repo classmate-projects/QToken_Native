@@ -24,11 +24,13 @@
                        HorizontalOptions="Center" />
 
                 <Entry Placeholder="Enter your username"
+                       Text="{Binding UserName}"
                    TextColor="{DynamicResource TextColor}"
                    PlaceholderColor="Gray"
                    BackgroundColor="Transparent" />
 
                 <Entry Placeholder="Enter your password"
+                       Text="{Binding Password}"
                    IsPassword="True"
                    TextColor="{DynamicResource TextColor}"
                    PlaceholderColor="Gray"
@@ -37,6 +39,7 @@
                 <Button Text="Login"
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="White"
+                        Command="{Binding LoginCommand}"
                     CornerRadius="8"
                     HeightRequest="50" />
 
