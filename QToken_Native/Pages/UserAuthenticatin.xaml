@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QToken_Native.Pages.UserAuthenticatin"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:views="clr-namespace:QToken_Native.Views"
+             BackgroundColor="{DynamicResource Primary}">
+    <HorizontalStackLayout>
+        <views:LoginView />
+        <views:RegistrationView />
+    </HorizontalStackLayout>
+</ContentPage>
