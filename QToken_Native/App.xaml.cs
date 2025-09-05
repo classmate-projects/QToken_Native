@@ -8,7 +8,7 @@ namespace QToken_Native
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new UserAuthenticatin());
         }
     }
 }

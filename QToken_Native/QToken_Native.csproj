@@ -62,15 +62,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\LoginPage.xaml">
+	  <MauiXaml Update="Pages\UserAuthenticatin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LoginView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RegistrationView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="ContentView\" />
-	  <Folder Include="Views\" />
 	  <Folder Include="Resources\Images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\UserAuthenticatin.xaml.cs">
+	    <DependentUpon>UserAuthenticatin.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\LoginView.xaml.cs">
+	    <DependentUpon>LoginView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>
