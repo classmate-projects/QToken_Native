@@ -1,69 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QToken_Native.Views.RegistrationView">
-    <Grid Padding="30">
-        <Border Stroke="{DynamicResource Secondary}"
-            StrokeShape="RoundRectangle 12"
-            Background="{DynamicResource Primary}"
-            Padding="25"
-            Margin="20">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="QToken_Native.Views.RegistrationView">
+	<Grid Padding="30">
+		<Border Stroke="{DynamicResource Secondary}"
+			StrokeShape="RoundRectangle 12"
+			Background="{DynamicResource Primary}"
+			Padding="25"
+			Margin="20">
 
-            <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+			<VerticalStackLayout Spacing="20" VerticalOptions="Center">
 
-                <Label Text="Sign up"
-                   FontSize="32"
-                   FontAttributes="Bold"
-                   TextColor="{DynamicResource TextColor}"
-                   HorizontalOptions="Center" />
-                <Label Text="Create new account"
-                   FontSize="16"
-                   TextColor="LightGray"
-                   HorizontalOptions="Center" />
+				<Label Text="Sign up"
+				   FontSize="32"
+				   FontAttributes="Bold"
+				   TextColor="{DynamicResource TextColor}"
+				   HorizontalOptions="Center" />
+				<Label Text="Create new account"
+				   FontSize="16"
+				   TextColor="LightGray"
+				   HorizontalOptions="Center" />
 
-                <Entry Placeholder="Enter your full name"
-                   TextColor="{DynamicResource TextColor}"
-                   PlaceholderColor="Gray"
-                   BackgroundColor="Transparent" />
+				<Entry Placeholder="Enter your full name"
+				   TextColor="{DynamicResource TextColor}"
+				   PlaceholderColor="Gray"
+				   BackgroundColor="Transparent"
+					   Text="{Binding Name}"/>
 
-                <Entry Placeholder="Choose a unique username"
-                   TextColor="{DynamicResource TextColor}"
-                   PlaceholderColor="Gray"
-                   BackgroundColor="Transparent" />
+				<Entry Placeholder="Choose a unique username"
+				   TextColor="{DynamicResource TextColor}"
+				   PlaceholderColor="Gray"
+				   BackgroundColor="Transparent" 
+					   Text="{Binding UserName}"/>
 
-                <Entry Placeholder="Create a password"
-                   IsPassword="True"
-                   TextColor="{DynamicResource TextColor}"
-                   PlaceholderColor="Gray"
-                   BackgroundColor="Transparent" />
+				<Entry Placeholder="Create a password"
+				   IsPassword="True"
+				   TextColor="{DynamicResource TextColor}"
+				   PlaceholderColor="Gray"
+				   BackgroundColor="Transparent" 
+					   Text="{Binding Password}"/>
 
-                <Picker Title="Select your medical speciality"
-                    TextColor="{DynamicResource TextColor}"
-                    TitleColor="Gray"
-                    BackgroundColor="Transparent">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Cardiology</x:String>
-                            <x:String>Neurology</x:String>
-                            <x:String>Pediatrics</x:String>
-                            <x:String>Orthopedics</x:String>
-                            <x:String>General Practice</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+				<Picker Title="Select your medical speciality"
+					TextColor="{DynamicResource TextColor}"
+					TitleColor="Gray"
+						SelectedItem="{Binding Speciality}"
+					BackgroundColor="Transparent">
+					<Picker.ItemsSource>
+						<x:Array Type="{x:Type x:String}">
+							<x:String>Cardiology</x:String>
+							<x:String>Neurology</x:String>
+							<x:String>Pediatrics</x:String>
+							<x:String>Orthopedics</x:String>
+							<x:String>General Practice</x:String>
+						</x:Array>
+					</Picker.ItemsSource>
+				</Picker>
 
-                <Button Text="Create an account"
-                    BackgroundColor="{DynamicResource Primary}"
-                    TextColor="White"
-                    CornerRadius="8"
-                    HeightRequest="50" />
+				<Entry Placeholder="Choose your seat"
+					   TextColor="{DynamicResource TextColor}"
+					   PlaceholderColor="Gray"
+					   BackgroundColor="Transparent" 
+                       Text="{Binding Role}"/>
 
-                <Label Text="Already have account? Login"
-                   FontSize="14"
-                   TextColor="LightGray"
-                   HorizontalOptions="Center" />
+				<Button Text="Create an account"
+					BackgroundColor="{DynamicResource Primary}"
+					TextColor="White"
+					CornerRadius="8"
+					HeightRequest="50" 
+                        Command="{Binding RegisterCommand}"/>
 
-            </VerticalStackLayout>
-        </Border>
-    </Grid>
+				<Label Text="Already have account? Login"
+				   FontSize="14"
+				   TextColor="LightGray"
+				   HorizontalOptions="Center" />
+
+			</VerticalStackLayout>
+		</Border>
+	</Grid>
 </ContentView>
