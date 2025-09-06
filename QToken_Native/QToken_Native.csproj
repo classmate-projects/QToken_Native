@@ -62,13 +62,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\UserAuthenticatin.xaml">
+	  <MauiXaml Update="Pages\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\LoginView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\RegistrationView.xaml">
+	  <MauiXaml Update="Pages\UserAuthentication.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -79,11 +76,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Pages\UserAuthenticatin.xaml.cs">
-	    <DependentUpon>UserAuthenticatin.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\LoginView.xaml.cs">
-	    <DependentUpon>LoginView.xaml</DependentUpon>
+	  <Compile Update="Pages\UserAuthentication.xaml.cs">
+	    <DependentUpon>UserAuthentication.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
