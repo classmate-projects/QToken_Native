@@ -1,14 +1,20 @@
 ﻿using QToken_Native.API;
 using QToken_Native.Models;
+using QToken_Native.Pages;
 using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
+using System.Windows.Input;
 
 
 namespace QToken_Native.ViewModels
 {
     public class UserAuthenticationViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        #region
         // Shared properties
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -19,20 +25,55 @@ namespace QToken_Native.ViewModels
         public string Role { get; set; } = "user";
 
         // View toggling
-        public bool IsLoginVisible { get; set; } = true;
-        public bool IsRegistrationVisible => !IsLoginVisible;
+        private bool _isLoginVisible = true;
+        public bool IsLoginVisible
+        {
+            get => _isLoginVisible;
+            set
+            {
+                _isLoginVisible = value;
+                OnPropertyChanged(nameof(IsLoginVisible));
+            }
+        }
+        private bool _isRegistrationVisible;
+        public bool IsRegistrationVisible
+        {
+            get => _isRegistrationVisible;
+            set
+            {
+                if (_isRegistrationVisible != value)
+                {
+                    _isRegistrationVisible = value;
+                    OnPropertyChanged(nameof(IsRegistrationVisible));
+                }
+            }
+        }
+        #endregion
 
-        public Command ToggleViewCommand { get; }
+        #region
         public Command RegisterCommand { get; }
         public Command LoginCommand { get; }
+        public ICommand ItemViewController => new Command(async () =>
+        {
+            IsLoginVisible = !IsLoginVisible;
+            OnPropertyChanged(nameof(IsLoginVisible));
+
+            IsRegistrationVisible = !IsRegistrationVisible;
+            OnPropertyChanged(nameof(IsRegistrationVisible));
+
+            await Task.CompletedTask;
+        });
+        #endregion
+
 
         public UserAuthenticationViewModel()
         {
-            ToggleViewCommand = new Command(() => IsLoginVisible = !IsLoginVisible);
             RegisterCommand = new Command(async () => await RegisterAsync());
             LoginCommand = new Command(async () => await LoginAsync());
         }
 
+
+        #region
         private async Task RegisterAsync()
         {
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
@@ -70,6 +111,8 @@ namespace QToken_Native.ViewModels
                     OnPropertyChanged(nameof(UserName));
                     OnPropertyChanged(nameof(Password));
                     OnPropertyChanged(nameof(Speciality));
+                    IsLoginVisible = true;
+                    IsRegistrationVisible = false;
                 }
                 else
                 {
@@ -94,7 +137,6 @@ namespace QToken_Native.ViewModels
 
             }
         }
-
         private async Task LoginAsync()
         {
             var dto = new UserLoginDTO
@@ -116,7 +158,7 @@ namespace QToken_Native.ViewModels
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     await Application.Current.MainPage.DisplayAlert("✅ Login", "Welcome back!", "OK");
-
+                    Application.Current.MainPage = new NavigationPage(new HomePage());
                     // Optionally navigate to dashboard or store user info
                 }
                 else
@@ -130,10 +172,7 @@ namespace QToken_Native.ViewModels
                 await Application.Current.MainPage.DisplayAlert("🚨 Error", ex.Message, "OK");
             }
         }
+        #endregion
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string name) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

@@ -1,10 +1,10 @@
 using QToken_Native.ViewModels;
 
-namespace QToken_Native.Views;
+namespace QToken_Native.Pages;
 
-public partial class LoginView : ContentView
+public partial class UserAuthentication : ContentPage
 {
-	public LoginView()
+	public UserAuthentication()
 	{
 		InitializeComponent();
         BindingContext = new UserAuthenticationViewModel();
