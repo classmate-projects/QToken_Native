@@ -15,5 +15,6 @@ public partial class UserAuthentication : ContentPage
     {
         base.OnAppearing();
         await _viewModel.LoadSpecialtiesAsync();
+        await _viewModel.InitializeViewStateAsync();
     }
 }

@@ -8,7 +8,7 @@
     <Grid>
         
         <Grid Padding="5"
-              IsVisible="{Binding IsLoginVisible}">
+              IsVisible="{Binding IsRegistrationVisible}">
             <Border Stroke="{DynamicResource SecondaryAppColor}"
                     StrokeShape="RoundRectangle 12"
                     Background="{DynamicResource PrimaryAppColor}"
@@ -60,6 +60,7 @@
                                              ItemsSource="{Binding Specialties}"/>
                     <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
                                             BorderThickness="2"
+                                            IsEnabled="False"
                                             FocusBorderColor="{DynamicResource AppWhite}"
                                             CornerRadius="10" Placeholder="Choose your seat"
 		                                    TextColor="{DynamicResource AppTextColor}"
@@ -72,7 +73,7 @@
 		                    CornerRadius="8"
 		                    HeightRequest="50" 
                             Command="{Binding RegisterCommand}"/>
-                    <Label HorizontalOptions="Center" FontSize="14" TextColor="{DynamicResource AppLightGray}">
+                    <!--<Label HorizontalOptions="Center" FontSize="14" TextColor="{DynamicResource AppLightGray}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Already have account? " />
@@ -83,13 +84,13 @@
                                 </Span>
                             </FormattedString>
                         </Label.FormattedText>
-                    </Label>
+                    </Label>-->
                 </VerticalStackLayout>
             </Border>
         </Grid>
         
         <Grid Padding="5"
-              IsVisible="{Binding IsRegistrationVisible}">
+              IsVisible="{Binding IsLoginVisible}">
             <Border Stroke="{DynamicResource SecondaryAppColor}"
                     StrokeShape="RoundRectangle 12"
                     Background="{DynamicResource PrimaryAppColor}"
@@ -129,7 +130,7 @@
                             Command="{Binding LoginCommand}"
                             CornerRadius="8"
                             HeightRequest="50" />
-                    <Label HorizontalOptions="Center" FontSize="14" TextColor="{DynamicResource AppLightGray}">
+                    <!--<Label HorizontalOptions="Center" FontSize="14" TextColor="{DynamicResource AppLightGray}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Don't have an account? " />
@@ -140,7 +141,7 @@
                                 </Span>
                             </FormattedString>
                         </Label.FormattedText>
-                    </Label>
+                    </Label>-->
                 </VerticalStackLayout>
             </Border>
         </Grid>

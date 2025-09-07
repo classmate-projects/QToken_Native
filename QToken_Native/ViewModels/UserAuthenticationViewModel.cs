@@ -43,10 +43,10 @@ namespace QToken_Native.ViewModels
         // Registration-specific
         public string Name { get; set; }
         public string Speciality { get; set; }
-        public string Role { get; set; } = "user";
 
-        // View toggling
-        private bool _isLoginVisible = true;
+        // Observable properties for UI state
+
+        private bool _isLoginVisible;
         public bool IsLoginVisible
         {
             get => _isLoginVisible;
@@ -56,6 +56,7 @@ namespace QToken_Native.ViewModels
                 OnPropertyChanged(nameof(IsLoginVisible));
             }
         }
+
         private bool _isRegistrationVisible;
         public bool IsRegistrationVisible
         {
@@ -69,6 +70,21 @@ namespace QToken_Native.ViewModels
                 }
             }
         }
+
+        private string _role;
+        public string Role
+        {
+            get => _role;
+            set
+            {
+                if (_role != value)
+                {
+                    _role = value;
+                    OnPropertyChanged(nameof(Role));
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -108,7 +124,7 @@ namespace QToken_Native.ViewModels
                 Name = Name,
                 UserName = UserName,
                 Password = Password,
-                Speciality = Speciality,
+                Speciality = SelectedSpecialty.Name,
                 Role = Role
             };
 
@@ -134,6 +150,7 @@ namespace QToken_Native.ViewModels
                     OnPropertyChanged(nameof(Speciality));
                     IsLoginVisible = true;
                     IsRegistrationVisible = false;
+                    Role="User";
                 }
                 else
                 {
@@ -193,13 +210,46 @@ namespace QToken_Native.ViewModels
                 await Application.Current.MainPage.DisplayAlert("🚨 Error", ex.Message, "OK");
             }
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public async Task InitializeViewStateAsync()
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.BaseAddress = new Uri(APIHost.Host);
+
+                bool adminExists = await client.GetFromJsonAsync<bool>(APIEndpoints.HaveAdmin);
+
+                if (!adminExists)
+                    Role = "Admin";
+                else
+                    Role = "User";
+                IsLoginVisible = adminExists;
+                IsRegistrationVisible = !adminExists;
+            }
+            catch (Exception ex)
+            {
+                IsLoginVisible = true;
+                IsRegistrationVisible = false;
+
+                await Application.Current.MainPage.DisplayAlert(
+                    "Connection Error",
+                    "Unable to verify admin . Please check your network or contact support.",
+                    "OK"
+                );
+            }
+        }
         public async Task LoadSpecialtiesAsync()
         {
             using var client = new HttpClient();
             client.BaseAddress = new Uri(APIHost.Host);
-            
+
             var specialties = await client.GetFromJsonAsync<List<Specialty>>(APIEndpoints.GetSpecialities);
-            
+
             if (specialties != null)
             {
                 Specialties.Clear();
@@ -209,6 +259,6 @@ namespace QToken_Native.ViewModels
         }
 
         #endregion
-
+        
     }
 }

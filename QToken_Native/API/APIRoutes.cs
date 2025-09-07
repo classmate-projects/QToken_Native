@@ -9,5 +9,6 @@
         public const string Register = "/api/user/register";
         public const string Login = "/api/user/login";
         public const string GetSpecialities = "api/specialties";
+        public const string HaveAdmin = "api/user/haveadmin";
     }
 }
