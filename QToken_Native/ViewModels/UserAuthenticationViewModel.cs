@@ -195,26 +195,17 @@ namespace QToken_Native.ViewModels
         }
         public async Task LoadSpecialtiesAsync()
         {
-            try
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri(APIHost.Host);
+            
+            var specialties = await client.GetFromJsonAsync<List<Specialty>>(APIEndpoints.GetSpecialities);
+            
+            if (specialties != null)
             {
-                using var client = new HttpClient();
-                client.BaseAddress = new Uri(APIHost.Host);
-
-                var specialties = await client.GetFromJsonAsync<List<Specialty>>(APIEndpoints.GetSpecialities);
-
-                if (specialties != null)
-                {
-                    Specialties.Clear();
-                    foreach (var s in specialties)
-                        Specialties.Add(s);
-                }
+                Specialties.Clear();
+                foreach (var s in specialties)
+                    Specialties.Add(s);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading specialties: {ex.Message}");
-                // Optionally notify user or retry
-            }
-
         }
 
         #endregion
