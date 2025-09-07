@@ -16,6 +16,7 @@ namespace QToken_Native.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         #region Properties
 
         //Pickers and selections
@@ -199,7 +200,7 @@ namespace QToken_Native.ViewModels
                 using var client = new HttpClient();
                 client.BaseAddress = new Uri(APIHost.Host);
 
-                var specialties = await client.GetFromJsonAsync<List<Specialty>>("api/specialties");
+                var specialties = await client.GetFromJsonAsync<List<Specialty>>(APIEndpoints.GetSpecialities);
 
                 if (specialties != null)
                 {
