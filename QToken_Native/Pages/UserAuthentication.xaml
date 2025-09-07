@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QToken_Native.Pages.UserAuthentication"
              NavigationPage.HasNavigationBar="False"
+             xmlns:controls="clr-namespace:QToken_Native.CustomView"
              BackgroundColor="{DynamicResource PrimaryAppColor}">
     <Grid>
-        <Grid Padding="30"
+        
+        <Grid Padding="5"
               IsVisible="{Binding IsLoginVisible}">
             <Border Stroke="{DynamicResource SecondaryAppColor}"
                     StrokeShape="RoundRectangle 12"
@@ -24,42 +26,46 @@
 	                       FontSize="16"
 	                       TextColor="{DynamicResource AppTextColor}"
 	                       HorizontalOptions="Center" />
-                    <Entry Placeholder="Enter your full name"
-	                       TextColor="{DynamicResource AppTextColor}"
-	                       PlaceholderColor="{DynamicResource AppGray}"
-	                       BackgroundColor="Transparent"
-		                   Text="{Binding Name}"/>
-                    <Entry Placeholder="Choose a unique username"
-	                       TextColor="{DynamicResource AppTextColor}"
-	                       PlaceholderColor="{DynamicResource AppGray}"
-	                       BackgroundColor="Transparent" 
-		                   Text="{Binding UserName}"/>
-                    <Entry Placeholder="Create a password"
-	                       IsPassword="True"
-	                       TextColor="{DynamicResource AppTextColor}"
-	                       PlaceholderColor="{DynamicResource AppGray}"
-	                       BackgroundColor="Transparent" 
-		                   Text="{Binding Password}"/>
-                    <Picker Title="Select your medical speciality"
-		                    TextColor="{DynamicResource AppTextColor}"
-		                    TitleColor="{DynamicResource AppGray}"
-		                	SelectedItem="{Binding Speciality}"
-		                    BackgroundColor="Transparent">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Cardiology</x:String>
-                                <x:String>Neurology</x:String>
-                                <x:String>Pediatrics</x:String>
-                                <x:String>Orthopedics</x:String>
-                                <x:String>General Practice</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                    <Entry Placeholder="Choose your seat"
-		                   TextColor="{DynamicResource AppTextColor}"
-		                   PlaceholderColor="{DynamicResource AppGray}"
-		                   BackgroundColor="Transparent" 
-                           Text="{Binding Role}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10"
+                                            Placeholder="Enter your full name"
+	                                        TextColor="{DynamicResource AppTextColor}"
+	                                        PlaceholderColor="{DynamicResource AppGray}"
+	                                        BackgroundColor="Transparent"
+		                                    Text="{Binding Name}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Choose a unique username"
+	                                        TextColor="{DynamicResource AppTextColor}"
+	                                        PlaceholderColor="{DynamicResource AppGray}"
+	                                        BackgroundColor="Transparent" 
+		                                    Text="{Binding UserName}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Create a password"
+	                                        IsPassword="True"
+	                                        TextColor="{DynamicResource AppTextColor}"
+	                                        PlaceholderColor="{DynamicResource AppGray}"
+	                                        BackgroundColor="Transparent" 
+		                                    Text="{Binding Password}"/>
+                    <controls:BorderedPicker Title="Select your speciality"
+		                                     TextColor="{DynamicResource AppTextColor}"
+		                                     TitleColor="{DynamicResource AppGray}"
+		                	                 SelectedItem="{Binding SelectedSpecialty}"
+		                                     BackgroundColor="Transparent"
+                                             ItemsSource="{Binding Specialties}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Choose your seat"
+		                                    TextColor="{DynamicResource AppTextColor}"
+		                                    PlaceholderColor="{DynamicResource AppGray}"
+		                                    BackgroundColor="Transparent" 
+                                            Text="{Binding Role}"/>
                     <Button Text="Create an account"
 		                    BackgroundColor="{DynamicResource PrimaryAppColor}"
 		                    TextColor="{DynamicResource AppWhite}"
@@ -81,7 +87,8 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
-        <Grid Padding="30"
+        
+        <Grid Padding="5"
               IsVisible="{Binding IsRegistrationVisible}">
             <Border Stroke="{DynamicResource SecondaryAppColor}"
                     StrokeShape="RoundRectangle 12"
@@ -99,17 +106,23 @@
                            FontSize="16"
                            TextColor="{DynamicResource AppTextColor}"
                            HorizontalOptions="Center" />
-                    <Entry Placeholder="Enter your username"
-                           Text="{Binding UserName}"
-                           TextColor="{DynamicResource AppTextColor}"
-                           PlaceholderColor="{DynamicResource AppGray}"
-                           BackgroundColor="Transparent" />
-                    <Entry Placeholder="Enter your password"
-                           Text="{Binding Password}"
-                           IsPassword="True"
-                           TextColor="{DynamicResource AppTextColor}"
-                           PlaceholderColor="{DynamicResource AppGray}"
-                           BackgroundColor="Transparent" />
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Enter your username"
+                                            Text="{Binding UserName}"
+                                            TextColor="{DynamicResource AppTextColor}"
+                                            PlaceholderColor="{DynamicResource AppGray}"
+                                            BackgroundColor="Transparent" />
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Enter your password"
+                                            Text="{Binding Password}"
+                                            IsPassword="True"
+                                            TextColor="{DynamicResource AppTextColor}"
+                                            PlaceholderColor="{DynamicResource AppGray}"
+                                            BackgroundColor="Transparent" />
                     <Button Text="Login"
                             BackgroundColor="{DynamicResource PrimaryAppColor}"
                             TextColor="{DynamicResource AppWhite}"
@@ -131,5 +144,6 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
+        
     </Grid>
 </ContentPage>

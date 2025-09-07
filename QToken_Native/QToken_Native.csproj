@@ -71,7 +71,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="CustomView\" />
 	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 

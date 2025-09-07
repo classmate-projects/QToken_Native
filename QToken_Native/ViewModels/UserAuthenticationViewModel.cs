@@ -1,7 +1,9 @@
 ﻿using QToken_Native.API;
 using QToken_Native.Models;
 using QToken_Native.Pages;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Input;
@@ -14,7 +16,25 @@ namespace QToken_Native.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        #region
+        #region Properties
+
+        //Pickers and selections
+        public ObservableCollection<Specialty> Specialties { get; set; } = new();
+
+        private Specialty _selectedSpecialty;
+        public Specialty SelectedSpecialty
+        {
+            get => _selectedSpecialty;
+            set
+            {
+                if (_selectedSpecialty != value)
+                {
+                    _selectedSpecialty = value;
+                    OnPropertyChanged(nameof(SelectedSpecialty));
+                }
+            }
+        }
+
         // Shared properties
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -50,7 +70,7 @@ namespace QToken_Native.ViewModels
         }
         #endregion
 
-        #region
+        #region Commands
         public Command RegisterCommand { get; }
         public Command LoginCommand { get; }
         public ICommand ItemViewController => new Command(async () =>
@@ -73,7 +93,7 @@ namespace QToken_Native.ViewModels
         }
 
 
-        #region
+        #region Private Methods
         private async Task RegisterAsync()
         {
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
@@ -172,6 +192,30 @@ namespace QToken_Native.ViewModels
                 await Application.Current.MainPage.DisplayAlert("🚨 Error", ex.Message, "OK");
             }
         }
+        public async Task LoadSpecialtiesAsync()
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.BaseAddress = new Uri(APIHost.Host);
+
+                var specialties = await client.GetFromJsonAsync<List<Specialty>>("api/specialties");
+
+                if (specialties != null)
+                {
+                    Specialties.Clear();
+                    foreach (var s in specialties)
+                        Specialties.Add(s);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading specialties: {ex.Message}");
+                // Optionally notify user or retry
+            }
+
+        }
+
         #endregion
 
     }
