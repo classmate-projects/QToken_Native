@@ -1,7 +1,9 @@
 ﻿using QToken_Native.API;
 using QToken_Native.Models;
 using QToken_Native.Pages;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Input;
@@ -14,7 +16,26 @@ namespace QToken_Native.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        #region
+
+        #region Properties
+
+        //Pickers and selections
+        public ObservableCollection<Specialty> Specialties { get; set; } = new();
+
+        private Specialty _selectedSpecialty;
+        public Specialty SelectedSpecialty
+        {
+            get => _selectedSpecialty;
+            set
+            {
+                if (_selectedSpecialty != value)
+                {
+                    _selectedSpecialty = value;
+                    OnPropertyChanged(nameof(SelectedSpecialty));
+                }
+            }
+        }
+
         // Shared properties
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -22,10 +43,10 @@ namespace QToken_Native.ViewModels
         // Registration-specific
         public string Name { get; set; }
         public string Speciality { get; set; }
-        public string Role { get; set; } = "user";
 
-        // View toggling
-        private bool _isLoginVisible = true;
+        // Observable properties for UI state
+
+        private bool _isLoginVisible;
         public bool IsLoginVisible
         {
             get => _isLoginVisible;
@@ -35,6 +56,7 @@ namespace QToken_Native.ViewModels
                 OnPropertyChanged(nameof(IsLoginVisible));
             }
         }
+
         private bool _isRegistrationVisible;
         public bool IsRegistrationVisible
         {
@@ -48,9 +70,24 @@ namespace QToken_Native.ViewModels
                 }
             }
         }
+
+        private string _role;
+        public string Role
+        {
+            get => _role;
+            set
+            {
+                if (_role != value)
+                {
+                    _role = value;
+                    OnPropertyChanged(nameof(Role));
+                }
+            }
+        }
+
         #endregion
 
-        #region
+        #region Commands
         public Command RegisterCommand { get; }
         public Command LoginCommand { get; }
         public ICommand ItemViewController => new Command(async () =>
@@ -73,7 +110,7 @@ namespace QToken_Native.ViewModels
         }
 
 
-        #region
+        #region Private Methods
         private async Task RegisterAsync()
         {
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
@@ -87,7 +124,7 @@ namespace QToken_Native.ViewModels
                 Name = Name,
                 UserName = UserName,
                 Password = Password,
-                Speciality = Speciality,
+                Speciality = SelectedSpecialty.Name,
                 Role = Role
             };
 
@@ -113,6 +150,7 @@ namespace QToken_Native.ViewModels
                     OnPropertyChanged(nameof(Speciality));
                     IsLoginVisible = true;
                     IsRegistrationVisible = false;
+                    Role="User";
                 }
                 else
                 {
@@ -172,7 +210,55 @@ namespace QToken_Native.ViewModels
                 await Application.Current.MainPage.DisplayAlert("🚨 Error", ex.Message, "OK");
             }
         }
+
         #endregion
 
+        #region Public Methods
+
+        public async Task InitializeViewStateAsync()
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.BaseAddress = new Uri(APIHost.Host);
+
+                bool adminExists = await client.GetFromJsonAsync<bool>(APIEndpoints.HaveAdmin);
+
+                if (!adminExists)
+                    Role = "Admin";
+                else
+                    Role = "User";
+                IsLoginVisible = adminExists;
+                IsRegistrationVisible = !adminExists;
+            }
+            catch (Exception ex)
+            {
+                IsLoginVisible = true;
+                IsRegistrationVisible = false;
+
+                await Application.Current.MainPage.DisplayAlert(
+                    "Connection Error",
+                    "Unable to verify admin . Please check your network or contact support.",
+                    "OK"
+                );
+            }
+        }
+        public async Task LoadSpecialtiesAsync()
+        {
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri(APIHost.Host);
+
+            var specialties = await client.GetFromJsonAsync<List<Specialty>>(APIEndpoints.GetSpecialities);
+
+            if (specialties != null)
+            {
+                Specialties.Clear();
+                foreach (var s in specialties)
+                    Specialties.Add(s);
+            }
+        }
+
+        #endregion
+        
     }
 }

@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QToken_Native.Pages.UserAuthentication"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="{DynamicResource Primary}">
+             xmlns:controls="clr-namespace:QToken_Native.CustomView"
+             BackgroundColor="{DynamicResource PrimaryAppColor}">
     <Grid>
-        <Grid Padding="30"
-              IsVisible="{Binding IsLoginVisible}">
-            <Border Stroke="{DynamicResource Secondary}"
+        
+        <Grid Padding="5"
+              IsVisible="{Binding IsRegistrationVisible}">
+            <Border Stroke="{DynamicResource SecondaryAppColor}"
                     StrokeShape="RoundRectangle 12"
-                    Background="{DynamicResource Primary}"
+                    Background="{DynamicResource PrimaryAppColor}"
                     Padding="25"
                     Margin="20">
 
@@ -18,74 +20,80 @@
                     <Label Text="Sign up"
 	                       FontSize="32"
 	                       FontAttributes="Bold"
-	                       TextColor="{DynamicResource TextColor}"
+	                       TextColor="{DynamicResource SecondaryAppColor}"
 	                       HorizontalOptions="Center" />
                     <Label Text="Create new account"
 	                       FontSize="16"
-	                       TextColor="LightGray"
+	                       TextColor="{DynamicResource AppTextColor}"
 	                       HorizontalOptions="Center" />
-                    <Entry Placeholder="Enter your full name"
-	                       TextColor="{DynamicResource TextColor}"
-	                       PlaceholderColor="Gray"
-	                       BackgroundColor="Transparent"
-		                   Text="{Binding Name}"/>
-                    <Entry Placeholder="Choose a unique username"
-	                       TextColor="{DynamicResource TextColor}"
-	                       PlaceholderColor="Gray"
-	                       BackgroundColor="Transparent" 
-		                   Text="{Binding UserName}"/>
-                    <Entry Placeholder="Create a password"
-	                       IsPassword="True"
-	                       TextColor="{DynamicResource TextColor}"
-	                       PlaceholderColor="Gray"
-	                       BackgroundColor="Transparent" 
-		                   Text="{Binding Password}"/>
-                    <Picker Title="Select your medical speciality"
-		                    TextColor="{DynamicResource TextColor}"
-		                    TitleColor="Gray"
-		                	SelectedItem="{Binding Speciality}"
-		                    BackgroundColor="Transparent">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Cardiology</x:String>
-                                <x:String>Neurology</x:String>
-                                <x:String>Pediatrics</x:String>
-                                <x:String>Orthopedics</x:String>
-                                <x:String>General Practice</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                    <Entry Placeholder="Choose your seat"
-		                   TextColor="{DynamicResource TextColor}"
-		                   PlaceholderColor="Gray"
-		                   BackgroundColor="Transparent" 
-                           Text="{Binding Role}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10"
+                                            Placeholder="Enter your full name"
+	                                        TextColor="{DynamicResource AppTextColor}"
+	                                        PlaceholderColor="{DynamicResource AppGray}"
+	                                        BackgroundColor="Transparent"
+		                                    Text="{Binding Name}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Choose a unique username"
+	                                        TextColor="{DynamicResource AppTextColor}"
+	                                        PlaceholderColor="{DynamicResource AppGray}"
+	                                        BackgroundColor="Transparent" 
+		                                    Text="{Binding UserName}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Create a password"
+	                                        IsPassword="True"
+	                                        TextColor="{DynamicResource AppTextColor}"
+	                                        PlaceholderColor="{DynamicResource AppGray}"
+	                                        BackgroundColor="Transparent" 
+		                                    Text="{Binding Password}"/>
+                    <controls:BorderedPicker Title="Select your speciality"
+		                                     TextColor="{DynamicResource AppTextColor}"
+		                                     TitleColor="{DynamicResource AppGray}"
+		                	                 SelectedItem="{Binding SelectedSpecialty}"
+		                                     BackgroundColor="Transparent"
+                                             ItemsSource="{Binding Specialties}"/>
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            IsEnabled="False"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Choose your seat"
+		                                    TextColor="{DynamicResource AppTextColor}"
+		                                    PlaceholderColor="{DynamicResource AppGray}"
+		                                    BackgroundColor="Transparent" 
+                                            Text="{Binding Role}"/>
                     <Button Text="Create an account"
-		                    BackgroundColor="{DynamicResource Primary}"
-		                    TextColor="White"
+		                    BackgroundColor="{DynamicResource PrimaryAppColor}"
+		                    TextColor="{DynamicResource AppWhite}"
 		                    CornerRadius="8"
 		                    HeightRequest="50" 
                             Command="{Binding RegisterCommand}"/>
-                    <Label HorizontalOptions="Center" FontSize="14" TextColor="LightGray">
+                    <!--<Label HorizontalOptions="Center" FontSize="14" TextColor="{DynamicResource AppLightGray}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Already have account? " />
-                                <Span Text="Login" TextColor="DodgerBlue" TextDecorations="Underline">
+                                <Span Text="Login" TextColor="{DynamicResource AppLinkText}" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding ItemViewController}" />
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>
                         </Label.FormattedText>
-                    </Label>
+                    </Label>-->
                 </VerticalStackLayout>
             </Border>
         </Grid>
-        <Grid Padding="30"
-              IsVisible="{Binding IsRegistrationVisible}">
-            <Border Stroke="{DynamicResource Secondary}"
+        
+        <Grid Padding="5"
+              IsVisible="{Binding IsLoginVisible}">
+            <Border Stroke="{DynamicResource SecondaryAppColor}"
                     StrokeShape="RoundRectangle 12"
-                    Background="{DynamicResource Primary}"
+                    Background="{DynamicResource PrimaryAppColor}"
                     Padding="25"
                     Margin="20">
                 <VerticalStackLayout Spacing="20"
@@ -93,43 +101,50 @@
                     <Label Text="Login"
                            FontSize="32"
                            FontAttributes="Bold"
-                           TextColor="{DynamicResource TextColor}"
+                           TextColor="{DynamicResource SecondaryAppColor}"
                            HorizontalOptions="Center" />
                     <Label Text="Welcome Back!"
                            FontSize="16"
-                           TextColor="LightGray"
+                           TextColor="{DynamicResource AppTextColor}"
                            HorizontalOptions="Center" />
-                    <Entry Placeholder="Enter your username"
-                           Text="{Binding UserName}"
-                           TextColor="{DynamicResource TextColor}"
-                           PlaceholderColor="Gray"
-                           BackgroundColor="Transparent" />
-                    <Entry Placeholder="Enter your password"
-                           Text="{Binding Password}"
-                           IsPassword="True"
-                           TextColor="{DynamicResource TextColor}"
-                           PlaceholderColor="Gray"
-                           BackgroundColor="Transparent" />
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Enter your username"
+                                            Text="{Binding UserName}"
+                                            TextColor="{DynamicResource AppTextColor}"
+                                            PlaceholderColor="{DynamicResource AppGray}"
+                                            BackgroundColor="Transparent" />
+                    <controls:BorderedEntry BorderColor="{DynamicResource AppGray}"
+                                            BorderThickness="2"
+                                            FocusBorderColor="{DynamicResource AppWhite}"
+                                            CornerRadius="10" Placeholder="Enter your password"
+                                            Text="{Binding Password}"
+                                            IsPassword="True"
+                                            TextColor="{DynamicResource AppTextColor}"
+                                            PlaceholderColor="{DynamicResource AppGray}"
+                                            BackgroundColor="Transparent" />
                     <Button Text="Login"
-                            BackgroundColor="{DynamicResource Primary}"
-                            TextColor="White"
+                            BackgroundColor="{DynamicResource PrimaryAppColor}"
+                            TextColor="{DynamicResource AppWhite}"
                             Command="{Binding LoginCommand}"
                             CornerRadius="8"
                             HeightRequest="50" />
-                    <Label HorizontalOptions="Center" FontSize="14" TextColor="LightGray">
+                    <!--<Label HorizontalOptions="Center" FontSize="14" TextColor="{DynamicResource AppLightGray}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Don't have an account? " />
-                                <Span Text="Sign up" TextColor="DodgerBlue" TextDecorations="Underline">
+                                <Span Text="Sign up" TextColor="{DynamicResource AppLinkText}" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding ItemViewController}" />
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>
                         </Label.FormattedText>
-                    </Label>
+                    </Label>-->
                 </VerticalStackLayout>
             </Border>
         </Grid>
+        
     </Grid>
 </ContentPage>
